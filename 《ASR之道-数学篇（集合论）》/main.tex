@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{xeCJK}
+\usepackage{bm}
+\usepackage{amsmath,amssymb}
+
+
+\title{ASR Principia 《ASR之道-数学篇（集合论）》}
+\author{xiao11lam/ZHANG XIAO }
+\date{June 2020}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+在开篇中，笔者提到要从道（原理）和术（应用）这两个大的层次框架来介绍语音识别技术。本部分主要是围绕道这一主线，但是在正式介绍语音识别技术之前，我们将谈到数学，声学，信号处理，机器学习和语言学相关的背景知识。语音识别技术涉及的领域众多，如果不能博采众长，那么相关的学习和学术也就难以进行。尤其是数学的运用，所以把它放在首要位置。在ASR中主要用到的数学分支有：离散/组合数学中的图论，统计概率，数学分析（包括实分析，复分析以及调和分析/傅里叶分析）以及最优化。本书与其他handbook不同的是很多会从严谨的数学定义出发，而是着重于快速运用和开发。对本身其来龙去脉不会过多着笔，而是追求一种高屋建瓴的思维模式，从整体中管中窥豹。文章末尾也会提供相关文献专著以供有兴趣的读者深入学习。如此一来，“今天格一件，明天格一件，习而久之，自然贯通”。考虑到语音识别相关领域大部分文献以英文为主，为了让读者更好地回顾，在正文部分将主要用英文来进行介绍。\\
+笔者希望读者对集合已有了解，此文仅仅是对其概念最为简单的回顾，想要深入了解的话请查看推荐书录。
+\end{abstract}
+
+\section{Sets}
+A \bm{$set$} is any well-defined list or collection of objects. The objects in a set are called \bm{$elements$}, or  \bm{$members$}.
+\begin{flusleft}
+Like A = \left\{a_{1}, a_{2}, a_{3}\right\} 
+\quad 
+     B = \left\{b_{1}, b_{2}, b_{3}\right\}
+\squad
+     C = \left\{a_{1}, a_{2}\right\} 
+\end{flusleft}
+\subsection{Subsets}
+We say C is a subset of A, and write: C\subseteq{$A$}\\
+\begin{flushleft}
+Since C is a subset of A ,and C not euqal A, so we call A is a proper subset of B, we say A \subset B.
+\end{flushleft}
+
+\subsection{Power Set}
+The set of all subsets of a set A is called the \bm{$power \ set$} of A, and is denoted by P(A).\\
+Eg. \squad P(A) = \left\{\varnothing,
+\left\{a_{1}\right\}, 
+\left\{a_{2}\right\},
+\left\{a_{3}\right\},
+\left\{a_{1}a_{2}\right\},
+\left\{a_{1}a_{3}\right\},
+\left\{a_{2}a_{3}\right\},
+A
+\right\}
+\subsection{Operations on sets}
+\begin{itemize}
+    \item  Union(交)
+\begin{flushleft}
+\cap \\
+\end{flushleft}
+    \item  Intersections（并)
+\begin{flushleft}
+\cup \\
+\end{flushleft}
+    \item  Complements(补）
+\begin{flushleft}
+like A^{'}, B^{'}, C^{'}
+\end{flushleft}
+\end{itemize}
+
+\subsection{Sets of numbers}
+Here are some important default sets:\\
+
+\bm{$N$}: the set of all \bm{$nature\ numbers$}\\
+\bm{$Z$}: the set of all \bm{$integers$}\\
+\bm{$Q$}: the set of all \bm{$rational\ numbers$}\\
+\bm{$Q^{'}$}: the set of all \bm{$irrational\ numbers$}\\
+\bm{$R$}: the set of all \bm{$real\ numbers$}\\
+\section{Relation}
+\subsection{Product set or Cartesian product}
+the formuala is:
+A \times B = \left\{\left(a,b\right)\mid a\in A \ and \ b\in B\right\}
+
+\begin{flushleft}
+So it means: A \times B = \left\{\left(a_{1},b_{1}\right),
+       \left(a_{1},b_{2}\right),
+       \left(a_{1},b_{3}\right),
+       \left(a_{2},b_{1}\right),
+       \left(a_{2},b_{2}\right),
+       \left(a_{2},b_{3}\right),
+       \left(a_{3},b_{1}\right),
+       \left(a_{3},b_{2}\right),
+       \left(a_{3},b_{3}\right)
+\right\}
+\end{flushleft}
+
+\begin{flushleft}
+\qquad \qquad A^2 = A \times A = \left\{\left(
+            a_{1},a_{1}\right),
+       \left(a_{1},a_{2}\right),
+       \left(a_{1},a_{3}\right),
+       \left(a_{2},a_{1}\right),
+       \left(a_{2},a_{2}\right),
+       \left(a_{2},a_{3}\right),
+       \left(a_{3},a_{1}\right),
+       \left(a_{3},a_{2}\right),
+       \left(a_{3},a_{3}\right)
+\right\}
+\end{flushleft}
+
+\subsection{Binary Relations}
+A binary relation \bm{$R$} from A to B is \bm{$a \ subset \of\ A \times B$} \bm{$(R\subseteq$A\times B$)$}
+\\
+\\
+\bm{$aRb$} means: a is R-related to b
+\\
+\\
+\bm{$aRb$} \squad \leftrightarrow\squad \left(a,b\right)\in \bm{$R$}
+
+
+\subsection{Domain and Range of R}
+
+\bm{domain}: Dom(R) = \left\{a\in A\mid  aRb  \right\}
+\begin{flushleft}
+Domain is the set of all a values of (a,b) in R
+\end{flushleft}
+\bm{range}: Ran(R) = \left\{b\in B\mid aRb \right\}
+\begin{flushleft}
+Range is the set of all b values of (a,b) in R
+\end{flushleft}
+
+
+\subsection{Matrix of a relation}
+The \bm{$matrix$} of R is denoted  \bm{M_{R}} = \left[m_{i}_{j}\right]\\
+In here:\\ 
+if a_{i}Rb_{j}, m_{i}_{j}=1\\
+if a_{i}\not{$R$}b_{j}, m_{i}{j}=0\\
+From the previous conditions, we know R is a subset of A\timesB, so R can be randomly chosen to describe the correlations between two sets. This technique is always used even in neuron network and deep learning and later we will see that. \\
+We can use the matrix of R to represent the relationship.\\
+Example: we now pick out a R we want, let's say R = {\left(
+            a_{1},b_{3}\right),
+       \left(a_{2},b_{2}\right),
+       \left(a_{3},b_{1}\right)
+\right\}\\
+
+The original correlation matrix = \begin{bmatrix} a_{1}b_{1} & a_{1}b_{2} & a_{1}b_{3} \\ a_{2}b{1} & a_{2}b{2} & a_{2}{3}\\
+a_{3}b{1} & a_{3}b{2} & a_{3}{3}\end{bmatrix}\\
+After that we using R to check, judge whether the elements in R still in that matrix, if in then change into 1, if not, then change into 0.\\
+Now, the R = M_{R}=\begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0\\
+1 & 0 & 0\end{bmatrix}\\
+\subsection{Properties of Relations}
+\begin{itemize}
+    \item Reflexive(自反关系）
+    \begin{center}
+        R is Reflexive if aRa, ${\forall a}$\in A\\
+        {$aRa$} \squad \leftrightarrow\squad \left(a,a\right)\in R
+    \end{center}
+    
+    \item Symmetric（对称关系）
+    \begin{center}
+    R is Symmetric if aRb, ${\forall a,b}$\in A\\ 
+    {$aRb$}\rightarrow{$bRa$}
+    \\
+    \begin{center}
+    \left(a,b\right)\in{$R$}\rightarrow{$\left(b,a\right)$}\in{$R$}
+    \end{center}
+    \end{center}
+    
+    \item Transitive（转换关系）
+    \begin{center}
+    R is Transitive if aRb and bRc, ${\forall a,b,c}$\in A\\
+    \begin{center}
+    aRb and bRc \rightarrow{aRc}\\
+    \left(a,b\right)\in{$R$} \cap  \left(b,c\right)\in{$R$}  \rightarrow{$\left(a,c\right)$\in{$R$}
+    \end{center}
+    \end{center}
+    \\
+    \item Equivalence（相等关系）\\
+    If R is reflexive,symmetric and transitive, then we call R is an equivalence equation.\\
+\begin{equvilence}
+\left\{
+    \begin{array}{lr}
+    aRa\leftrightarrow\squad\left(a,a\right)\in R & \\
+    \left(a,b\right)\in{$R$}\rightarrow{$\left(b,a\right)$\in {$R$}} \\
+    \left(a,b\right)\in{$R$} \cap  \left(b,c\right)\in{$R$}  \rightarrow{$\left(a,c\right)$\in{$R$}, &
+    \end{array}
+\right.
+\end{equvilence}
+\end{itemize}
+
+
+
+
+
+
+\section{Suggested Materials(推荐书目)}
+Basic Set Theory --- Azriel Lévy\\
+Set Theory: An Introduction to Independence Proofs --- Kenneth Kunen\\
+Set Theory: An Introduction to Large Cardinals (Studies in Logic & the Foundations of Mathematics - Vol 76) --- Frank R Drake \\
+Set Theory --- Jech, Thomas\\
+
+\begin{flushleft}
+最近手边增加了不少琐事，正所谓悠闲才是哲学之母，看来伊终究是与我无缘了。昨天拜会了Reuben Samuel先生，以后向他学习音乐的混音和录制，考虑到网上的相关学习分享可谓乏陈，待学成以后也能在这里单独开篇分享。ASR在工业界中在声乐处理中还是大有可为的，希望在音乐唱片录制的学习过程中有所广益。但是考虑到我的五音不全，又想到鹤善舞而不善耕，牛善耕而不善舞，物性然也。如今欲反而教之，无乃劳矣。\\
+\end{flushleft}
+
+\end{document}
